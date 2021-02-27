@@ -11,7 +11,6 @@ import MembershipListView from './view/MembershipListView';
 interface Props {
   //
   membershipsService?: MembershipsService;
-
   keyword?: string;
   onClick?: (event: React.MouseEvent, membership: Membership) => void;
 }
@@ -50,7 +49,7 @@ class MembershipListContainer extends React.Component<Props> {
       membershipsService!.findAllMembershipsOfMember(keyword);
     }
     else {
-      membershipsService!.findAllMembershipsOfClub("1");
+      membershipsService!.findAllMembershipsOfAllClubs();
     }
   }
   

@@ -36,6 +36,16 @@ class MembershipsService {
   }
 
   @action
+  async findAllMembershipsOfAllClubs(): Promise<Membership[]> {
+    //
+    const memberships = await this.membershipApi.findAllMembershipsOfAllClubs();
+
+    runInAction(() => this.memberships = memberships);
+
+    return memberships;
+  }
+
+  @action
   async  findAllMembershipsOfMember(memberId: string): Promise<Membership[]> {
     //
     const memberships = await this.membershipApi.findAllMembershipsOfMember(memberId);

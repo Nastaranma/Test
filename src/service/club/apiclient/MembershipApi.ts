@@ -47,6 +47,15 @@ class MembershipApi {
       .then((response) => response && response.data || []);
   }
 
+  findAllMembershipsOfAllClubs(): Promise<Membership[]> {
+    //
+    const params = {
+    };
+
+    return axios.get(`${this.membershipApiUrl}/allClub`, params)
+        .then((response) => response && response.data || []);
+  }
+
   findAllMembershipsOfMember(memberId: string): Promise<Membership[]> {
     //
     const params = {

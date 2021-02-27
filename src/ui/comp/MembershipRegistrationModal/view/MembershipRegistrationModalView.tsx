@@ -1,74 +1,71 @@
 import React from 'react';
 import autobind from 'autobind-decorator';
-import { DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import {DialogContent, DialogTitle, MenuItem, Select, TextField} from '@material-ui/core';
 
-import { Membership } from '../../../../model';
-import { BasicDialog } from '../../shared';
+import {Membership, TravelClub} from '../../../../model';
+import {BasicDialog} from '../../shared';
 
 
 interface Props {
-  //
-  Membership: Membership;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onRegister: () => void;
-  onCancel: () => void;
+    //
+    clubs: TravelClub[];
+    membership: Membership;
+    onChange: (event: any) => void;
+    onRegister: () => void;
+    onCancel: () => void;
 }
 
 
 @autobind
 class MembershipRegistrationModalView extends React.Component<Props> {
-  //
-  render() {
     //
-    const { Membership, onChange, onRegister, onCancel } = this.props;
+    render() {
+        //
+        const {membership, onChange, onRegister, onCancel, clubs} = this.props;
 
-    return (
-      <BasicDialog
-        buttonLabel="등록"
-        onConfirm={onRegister}
-        onCancel={onCancel}
-      >
-        <DialogTitle> Membership 등록</DialogTitle>
-        <DialogContent>
-          <TextField
-            required
-            fullWidth
-            label="Club ID"
-            name="Club ID"
-            value={Membership.clubId}
-            onChange={onChange}
-          />
-          <TextField
-           required
-           fullWidth
-           label="Member ID"
-           name="Member ID"
-           value={Membership.memberId}
-           onChange={onChange}
-          />
-           <TextField
-            required
-            fullWidth
-            label="Role in Club"
-            name="Role in Club"
-            value={Membership.role}
-            onChange={onChange}
-          />
-          <TextField
-            required
-            fullWidth
-            label="Joint Date"
-            name="Joint Date"
-            type="date"
-            defaultValue="2021-01-01"
-            value={Membership.joinDate}
-            onChange={onChange}
-          />
-         
-        </DialogContent>
-      </BasicDialog>
-    );
-  }
+        return (
+            <BasicDialog
+                buttonLabel="등록"
+                onConfirm={onRegister}
+                onCancel={onCancel}
+            >
+                <DialogTitle> Membership 등록</DialogTitle>
+                <DialogContent>
+                    <Select
+                        required
+                        fullWidth
+                        label="Club ID"
+                        name="clubId"
+                        value={membership.clubId}
+                        onChange={onChange}
+                    >
+                        {clubs.map((e, keyIndex) =>
+                            <MenuItem key={keyIndex} value={e.id}>{e.name}</MenuItem>)}
+                    </Select>
+                    <TextField
+                        required
+                        fullWidth
+                        label="Member ID"
+                        name="memberId"
+                        value={membership.memberId}
+                        onChange={onChange}
+                    />
+                    <Select
+                        required
+                        fullWidth
+                        label="Role in Club"
+                        name="Role in Club"
+                        defaultValue={membership.role}
+                        onChange={() => onChange}
+                    >
+                        <MenuItem value={"Member"}>Member</MenuItem>
+                        <MenuItem value={"President"}>President</MenuItem>
+                    </Select>
+
+                </DialogContent>
+            </BasicDialog>
+        );
+    }
 }
 
 export default MembershipRegistrationModalView;
